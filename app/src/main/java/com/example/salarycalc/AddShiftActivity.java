@@ -8,6 +8,8 @@ import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
+
+import static com.example.salarycalc.R.id.button_entry;
 import static com.example.salarycalc.R.id.textView;
 
 public class AddShiftActivity extends AppCompatActivity {
@@ -25,6 +27,8 @@ public class AddShiftActivity extends AppCompatActivity {
         numPicker = (NumberPicker)findViewById(R.id.numPicker);
         numPicker.setMaxValue(9);
         numPicker.setMinValue(1);
+        //button_entry.setOnClickListener(new OnClickListener() {
+
 
     }
 
