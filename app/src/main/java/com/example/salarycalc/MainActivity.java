@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+
 
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.salarycalc.MESSAGE";
@@ -18,22 +20,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        MyOpenHelper helper = new MyOpenHelper(this);
+        /*
+        MyOpenHelperShift helper = new MyOpenHelperShift(this);
         final SQLiteDatabase db = helper.getWritableDatabase();
 
         TextView show = (TextView) findViewById(R.id.show_shift);
 
-        //Cursor c = db.query("shift", new String[] { "shift_name", "date", "time" }, null, null, null, null, null);
-        Cursor c = db.query("ptj", new String[]{"ptj_name"}, null, null, null, null, null);
+        Cursor c = db.query("shift", new String[]{"shift_name", "date", "time"}, null, null, null, null, null);
 
         boolean mov = c.moveToFirst();
         String shifts = "";
 
         while (mov) {
 
-            //shifts += String.format("%s : 日付 %s : %d時間　\n", c.getString(0), c.getString(1), c.getInt(2));
-            shifts += String.format("%s\n",c.getString(0));
+            shifts += String.format("バイト：%s 　日付 : %s 　時間 : %d 時間 \n",c.getString(0), c.getString(1), c.getInt(2));
             mov = c.moveToNext();
             //layout.addView(textView);
         }
@@ -41,7 +41,12 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
         show.setText(shifts);
+        */
+
+        updateShift();
+
     }
+
 
 
     public void addPTJ(View view) {
@@ -55,5 +60,31 @@ public class MainActivity extends AppCompatActivity {
     public void addShift(View view) {
         Intent intent = new Intent(this, AddShiftActivity.class);
         startActivity(intent);
+    }
+
+    public void updateShift(){
+        //setContentView(R.layout.activity_main);
+
+        MyOpenHelperShift helper = new MyOpenHelperShift(this);
+        final SQLiteDatabase db = helper.getWritableDatabase();
+
+        TextView show = (TextView) findViewById(R.id.show_shift);
+
+        Cursor c = db.query("shift", new String[]{"shift_name", "date", "time"}, null, null, null, null, null);
+
+        boolean mov = c.moveToFirst();
+        String shifts = "";
+
+        while (mov) {
+
+            shifts += String.format("バイト：%s 　日付 : %s 　時間 : %d 時間 \n",c.getString(0), c.getString(1), c.getInt(2));
+            mov = c.moveToNext();
+            //layout.addView(textView);
+        }
+        c.close();
+        db.close();
+
+        show.setText(shifts);
+
     }
 }

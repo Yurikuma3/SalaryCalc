@@ -2,6 +2,8 @@ package com.example.salarycalc;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.DialogFragment;
@@ -87,7 +89,7 @@ public class AddShiftActivity extends AppCompatActivity {
     }
 
     public void shiftInput(View v){
-        MyOpenHelper helper = new MyOpenHelper(this);
+        MyOpenHelperShift helper = new MyOpenHelperShift(this);
         final SQLiteDatabase db = helper.getWritableDatabase();
 
         final EditText date = (EditText) findViewById(R.id.txtDate);
@@ -101,9 +103,49 @@ public class AddShiftActivity extends AppCompatActivity {
         ContentValues contentValues = new ContentValues();
         contentValues.put("shift_name", name);
         contentValues.put("date", shitf_date);
+        contentValues.put("time", timeIdx);
 
-        long id = db.insert("shift", name, contentValues); //登録したデータのIDを取得
+        //long id = db.insert("shift", name, contentValues); //登録したデータのIDを取得
+
+        //完了ボタンを押した時にメインのアップデートを完了させようとしてる。よ。
+        //updateMain();
 
     }
 
+    public void updateMain() {
+
+        MainActivity ma = new MainActivity();
+        ma.updateShift();
+
+
+
+        /*
+        setContentView(R.layout.activity_main);
+
+        MyOpenHelperShift helper = new MyOpenHelperShift(this);
+        final SQLiteDatabase db = helper.getWritableDatabase();
+
+        TextView show = (TextView) findViewById(R.id.show_shift);
+
+        Cursor c = db.query("shift", new String[]{"shift_name", "date", "time"}, null, null, null, null, null);
+
+        boolean mov = c.moveToFirst();
+        String shifts = "";
+
+        while (mov) {
+
+            shifts += String.format("バイト：%s 　日付 : %s 　時間 : %d 時間 \n", c.getString(0), c.getString(1), c.getInt(2));
+            mov = c.moveToNext();
+            //layout.addView(textView);
+        }
+        c.close();
+        db.close();
+
+        show.setText(shifts);
+        */
+    }
+
+
 }
+
+
