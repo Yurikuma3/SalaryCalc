@@ -7,9 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 public class AddPTJActivity extends AppCompatActivity {
@@ -22,55 +20,47 @@ public class AddPTJActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ptj);
     }
-/*
+
+    public void showData(View v) {
+        //データを表示する
+        setContentView(R.layout.activity_add_ptj);
+        Intent dbIntent = new Intent(AddPTJActivity.this,ShowDataBase.class);
+        startActivity(dbIntent);
+
+    }
+
+    public void dataInput(View v){
         MyOpenHelper helper = new MyOpenHelper(this);
         final SQLiteDatabase db = helper.getWritableDatabase();
 
-        final EditText txt_jobname = (EditText) findViewById(R.id.txt_jobname);
+        final EditText txt_jobname = (EditText) findViewById(R.id.txt_jobname); // テキストの場所を見つけて
         final EditText txt_salary = (EditText) findViewById(R.id.txt_salary);
-*/
+        String jobname = txt_jobname.getText().toString(); // Stringに直す
+        String salary = txt_salary.getText().toString();
 
-        //Button button_entry = (Button) findViewById(R.id.button_entry);
-        //button_entry.setOnClickListener(new View.OnClickListener() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ptj_name", jobname);
+        contentValues.put("salary", salary);
+        long id = db.insert("ptj", jobname, contentValues); //登録したデータのIDを取得
 
-            //@Override
-    public void showData(View v) {
-            MyOpenHelper helper = new MyOpenHelper(this);
-            final SQLiteDatabase db = helper.getWritableDatabase();
-
-            final EditText txt_jobname = (EditText) findViewById(R.id.txt_jobname);
-            final EditText txt_salary = (EditText) findViewById(R.id.txt_salary);
-                String jobname = txt_jobname.getText().toString();
-                String salary = txt_salary.getText().toString();
-
-                ContentValues insertValues = new ContentValues();
-                insertValues.put("ptj_name", jobname);
-                insertValues.put("salary", salary);
-                long id = db.insert("ptj", jobname, insertValues);
-
-                    //データを表示する
-                    setContentView(R.layout.show_database);
-                    Intent dbIntent = new Intent(AddPTJActivity.this,
-                            ShowDataBase.class);
-                    startActivity(dbIntent);
-
-
-                }
-/*
-        //findViews();
-    });
     }
-*/
+
+    public void dataReset(View v){
+
+        MyOpenHelper helper = new MyOpenHelper(this);
+        final SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete("ptj", null, null);
+
+    }
 
     private void findViews() {
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         textView = new TextView(this);
+        /*
         textView.setTextSize(40);
         textView.setText(message);
-
-        //numberPicker = (NumberPicker)findViewById(R.id.numPicker);
-        //int val = numberPicker.getValue();
+        */
 
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_add_ptj);
         layout.addView(textView);
