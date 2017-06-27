@@ -14,13 +14,10 @@ class MyOpenHelper extends SQLiteOpenHelper {
     //一番最初にDBが作られた時に行われる処理。DBの作成
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table ptj(" + " ptj_name text not null," + "salary text not null"
-                + ");");
-
-        db.execSQL("create table dates(" + " date text not null," + "time text not null"
-                + ");");
+        db.execSQL("create table ptj(" + " ptj_name text not null," + "salary integer not null" + ");");
+        db.execSQL("create table shift(" + "shift_name text not null," + "date text not null," + "time integer not null" + ");");
+        //System.out.println("データベース作れたよ");
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

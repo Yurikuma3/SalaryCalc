@@ -20,6 +20,7 @@ public class ShowDataBase extends Activity {
         MyOpenHelper helper = new MyOpenHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
 
+
         // queryメソッドの実行例
         Cursor c = db.query("ptj", new String[] { "ptj_name", "salary" }, null,
                 null, null, null, null);
@@ -27,8 +28,7 @@ public class ShowDataBase extends Activity {
         boolean mov = c.moveToFirst();
         while (mov) {
             TextView textView = new TextView(this);
-            textView.setText(String.format("%s : %d円", c.getString(0),
-                    c.getInt(1)));
+            textView.setText(String.format("%s : %d円", c.getString(0), c.getInt(1)));
             mov = c.moveToNext();
             layout.addView(textView);
         }
