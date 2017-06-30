@@ -19,11 +19,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        // シフト一覧を表示
         MyOpenHelperShift helper1 = new MyOpenHelperShift(this);
         final SQLiteDatabase db = helper1.getWritableDatabase();
 
         TextView show = (TextView) findViewById(R.id.show_shift);
-
         Cursor c = db.query("shift", new String[]{"shift_name", "date", "time"}, null, null, null, null, null);
 
         boolean mov = c.moveToFirst();
@@ -37,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             times.add(c.getInt(2));
             mov = c.moveToNext();
         }
-
         show.setText(shifts);
+
 
         // 合計金額を表示
         MyOpenHelper helper2 = new MyOpenHelper(this);
@@ -78,30 +79,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddShiftActivity.class);
         startActivity(intent);
     }
-/*
-    public void updateShift(){
-        //setContentView(R.layout.activity_main);
 
-        MyOpenHelperShift helper = new MyOpenHelperShift(this);
-        final SQLiteDatabase db = helper.getWritableDatabase();
-
-        TextView show = (TextView) findViewById(R.id.show_shift);
-
-        Cursor c = db.query("shift", new String[]{"shift_name", "date", "time"}, null, null, null, null, null);
-
-        boolean mov = c.moveToFirst();
-        String shifts = "";
-
-        while (mov) {
-            shifts += String.format("バイト：%s 　日付 : %s 　時間 : %d 時間 \n",c.getString(0), c.getString(1), c.getInt(2));
-            mov = c.moveToNext();
-        }
-        c.close();
-        db.close();
-
-        show.setText(shifts);
-    }
-*/
     public void dbClear(View v){
         MyOpenHelper helper = new MyOpenHelper(this);
         final SQLiteDatabase db = helper.getWritableDatabase();

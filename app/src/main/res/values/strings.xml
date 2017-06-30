@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">SalaryCalc</string>
-    <string name="button_add">バイト先を追加</string>
-    <string name="text_place">バイト先</string>
+    <string name="button_add_ptj">バイト先を追加</string>
+    <string name="button_add_shift">新規シフトを追加</string>
+    <string name="button_delete">全ての登録情報を削除する</string>
+    <string name="text_name">バイト先</string>
     <string name="text_salary">時給</string>
+    <string name="text_date">日付</string>
+    <string name="text_time">時間</string>
     <string name="text_clear">完了</string>
+    <string name="text_selectd">日付を選択</string>
+    <string name="text_2top">トップへ戻る</string>
+    <string name="text_check">現在のバイト先一覧を確認</string>
+    <string name="text_yen">円</string>
+    <string name="text_temp">ここにシフトが表示されます</string>
     <string-array name="ingredients_quantity">
         <item>"1"</item>
         <item>"2"</item>

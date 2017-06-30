@@ -23,17 +23,16 @@ public class AddPTJActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_ptj);
         Intent dbIntent = new Intent(AddPTJActivity.this,ShowDataBase.class);
         startActivity(dbIntent);
-
     }
 
     public void dataInput(View v){
         MyOpenHelper helper = new MyOpenHelper(this);
         final SQLiteDatabase db = helper.getWritableDatabase();
 
-        final EditText txt_jobname = (EditText) findViewById(R.id.txt_jobname); // テキストの場所を見つけて
-        final EditText txt_salary = (EditText) findViewById(R.id.txt_salary);
-        String jobname = txt_jobname.getText().toString(); // Stringに直す
-        String salary = txt_salary.getText().toString();
+        final EditText txtJob = (EditText) findViewById(R.id.txtJob); // テキストの場所を見つけて
+        final EditText txtSalary = (EditText) findViewById(R.id.txtSalary);
+        String jobname = txtJob.getText().toString(); // Stringに直す
+        String salary = txtSalary.getText().toString();
 
         if(jobname.equals("")) {
             Toast.makeText(AddPTJActivity.this,"バイト先を入力してください。", Toast.LENGTH_SHORT).show();
@@ -45,8 +44,8 @@ public class AddPTJActivity extends AppCompatActivity {
             contentValues.put("salary", salary);
             long id = db.insert("ptj", jobname, contentValues); //登録したデータのIDを取得
             Toast.makeText(AddPTJActivity.this, "登録完了", Toast.LENGTH_SHORT).show();
-            txt_jobname.setText("");
-            txt_salary.setText("");
+            txtJob.setText("");
+            txtSalary.setText("");
         }
 
     }

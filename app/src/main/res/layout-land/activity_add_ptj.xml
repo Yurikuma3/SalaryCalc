@@ -19,12 +19,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_place"
+            android:text="@string/text_name"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="15dp" />
 
         <EditText
-            android:id="@+id/txt_jobname"
+            android:id="@+id/txtJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"

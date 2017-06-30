@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,11 +51,9 @@ public class AddShiftActivity extends AppCompatActivity {
         dateDialog.show();
     }
 
+    ArrayList<String> list = new ArrayList<String>(); // バイト先のリスト
     private void setSpinner(){
         spinner = (Spinner)findViewById(R.id.spName);
-
-        // Listの作成
-        ArrayList<String> list = new ArrayList<String>();
 
         // sqlからの読み込み
         MyOpenHelper helper = new MyOpenHelper(this);
