@@ -1,3 +1,5 @@
+//after
+
 package com.example.salarycalc;
 
 
@@ -15,8 +17,6 @@ class MyOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table ptj(" + " ptj_name text not null," + "salary integer not null" + ");");
-        //db.execSQL("create table shift(" + "shift_name text not null," + "date text not null," + "time integer not null" + ");");
-        //System.out.println("データベース作れたよ");
     }
 
     @Override

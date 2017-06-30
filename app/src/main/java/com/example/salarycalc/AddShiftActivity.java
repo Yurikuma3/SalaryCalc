@@ -1,32 +1,28 @@
+//変更後
+
 package com.example.salarycalc;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static com.example.salarycalc.R.id.button_entry;
-import static com.example.salarycalc.R.id.textView;
-
 public class AddShiftActivity extends AppCompatActivity {
 
-    NumberPicker numPicker;
     Spinner spinner;
     private DatePickerDialog.OnDateSetListener varDateSetListener;
 
@@ -37,15 +33,13 @@ public class AddShiftActivity extends AppCompatActivity {
 
         setSpinner();
 
-        final EditText editText = (EditText)findViewById(R.id.txtDate);
-
+        final TextView editText = (TextView)findViewById(R.id.txtDate);
         varDateSetListener = new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker view , int year , int monthOfYear , int dayOfMonth){
                 editText.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
             }
         };
-
     }
 
     public void selectDate(View view){
@@ -80,6 +74,7 @@ public class AddShiftActivity extends AppCompatActivity {
 
         // Adapterの作成
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+
         // ドロップダウンのレイアウトを指定
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -89,60 +84,43 @@ public class AddShiftActivity extends AppCompatActivity {
     }
 
     public void shiftInput(View v){
-        MyOpenHelperShift helper = new MyOpenHelperShift(this);
-        final SQLiteDatabase db = helper.getWritableDatabase();
+        MyOpenHelperShift helpers = new MyOpenHelperShift(this);
+        final SQLiteDatabase db = helpers.getWritableDatabase();
 
-        final EditText date = (EditText) findViewById(R.id.txtDate);
+        final TextView date = (TextView) findViewById(R.id.txtDate);
         Spinner shift_name = (Spinner) findViewById(R.id.spName);
         Spinner time = (Spinner) findViewById(R.id.spTime);
 
         int timeIdx = time.getSelectedItemPosition() + 1; //シフトが入っている時間
         String name = (String) shift_name.getSelectedItem(); //選択したバイト
-        String shitf_date = date.getText().toString();  //シフトが入っている日
+        String shift_date = date.getText().toString();  //シフトが入っている日
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("shift_name", name);
-        contentValues.put("date", shitf_date);
-        contentValues.put("time", timeIdx);
-
-        //long id = db.insert("shift", name, contentValues); //登録したデータのIDを取得
-
-        //完了ボタンを押した時にメインのアップデートを完了させようとしてる。よ。
-        //updateMain();
-
+        if(name.equals(null) | name.equals("")) {
+            Toast.makeText(AddShiftActivity.this, "バイトを選択してください。", Toast.LENGTH_SHORT).show();
+        }else if(shift_date.equals("")){
+            Toast.makeText(AddShiftActivity.this, "日付を選択してください。", Toast.LENGTH_SHORT).show();
+        } else {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("shift_name", name);
+            contentValues.put("date", shift_date);
+            contentValues.put("time", timeIdx);
+            long id = db.insert("shift", name, contentValues); //登録したデータのIDを取得
+            Toast.makeText(AddShiftActivity.this, "シフト登録完了", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void updateMain() {
+    public void toTop(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
-        MainActivity ma = new MainActivity();
-        ma.updateShift();
-
-
-
-        /*
-        setContentView(R.layout.activity_main);
-
-        MyOpenHelperShift helper = new MyOpenHelperShift(this);
-        final SQLiteDatabase db = helper.getWritableDatabase();
-
-        TextView show = (TextView) findViewById(R.id.show_shift);
-
-        Cursor c = db.query("shift", new String[]{"shift_name", "date", "time"}, null, null, null, null, null);
-
-        boolean mov = c.moveToFirst();
-        String shifts = "";
-
-        while (mov) {
-
-            shifts += String.format("バイト：%s 　日付 : %s 　時間 : %d 時間 \n", c.getString(0), c.getString(1), c.getInt(2));
-            mov = c.moveToNext();
-            //layout.addView(textView);
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Disable Back key
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return false;
         }
-        c.close();
-        db.close();
-
-        show.setText(shifts);
-        */
+        return super.onKeyDown(keyCode, event);
     }
 
 
